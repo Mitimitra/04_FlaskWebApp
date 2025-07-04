@@ -55,6 +55,9 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownProfile">
                         <li><a class="dropdown-item" href="#">Change Password</a></li>
                         <li><a class="dropdown-item" href="#">Account Settings</a></li>
+                        {% if 'emp_name' in session %}
+                        <li><a class="dropdown-item" href="{{ url_for("logout") }}">Logout</a></li>
+                        {% endif %}
                     </ul>
                 </li>
             </ul>

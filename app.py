@@ -154,6 +154,12 @@ def validate_org():
     return jsonify({'valid': bool(result)})
 
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
+
 
 
 if __name__ == '__main__':

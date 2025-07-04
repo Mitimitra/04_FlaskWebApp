@@ -19,26 +19,26 @@
                 document.getElementById('username').disabled = false;
                 document.getElementById('password').disabled = false;
                 document.getElementById('login_button').disabled = false;
-                document.getElementById('org_status').innerText = "✔ Organization Code verified.";
-                document.getElementById('org_status').style.color = "green";
+                document.getElementById('org_status').innerHTML = `<div class="alert alert-success" role="alert">Organisation Code is Valid</div>`;
             } else {
                 document.getElementById('username').disabled = true;
                 document.getElementById('password').disabled = true;
                 document.getElementById('login_button').disabled = true;
-                document.getElementById('org_status').innerText = "✘ Invalid Organization Code.";
-                document.getElementById('org_status').style.color = "red";
+                document.getElementById('org_status').innerHTML = `<div class="alert alert-danger" role="alert">Organisation Code is not Valid</div>`;
             }
         }
     </script>
 </head>
 <body>
-    <h2>Login</h2>
-
+    <h2 class="text-center">Login</h2>
+    <div class="d-flex justify-content-center align-center">
     <form method="POST" action="/login">
         <label>Organization Code:</label><br>
         <input type="text" name="org_code" id="org_code" required>
         <button type="button" onclick="validateOrgCode()" class="btn btn-success">Validate</button><br>
-        <span id="org_status"></span><br><br>
+        <span id="org_status">
+        
+        </span><br><br>
 
         <label>Username:</label><br>
         <input type="text" name="username" id="username" required disabled><br>
@@ -54,6 +54,7 @@
     {% elif message %}
         <script>alert("{{ message | e }}");</script>
     {% endif %}
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 
 </body>
