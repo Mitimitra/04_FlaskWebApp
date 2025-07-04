@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script>
+        async function validateOrgCode() {
+            const orgCode = document.getElementById('org_code').value.trim();
+            if (orgCode === '') {
+                alert("Please enter Organization Code");
+                return;
+            }
+
+            const res = await fetch(`/validate_org?org_code=${orgCode}`);
+            const data = await res.json();
+
+            if (data.valid) {
+                document.getElementById('username').disabled = false;
+                document.getElementById('password').disabled = false;
+                document.getElementById('login_button').disabled = false;
+                document.getElementById('org_status').innerText = "✔ Organization Code verified.";
+                document.getElementById('org_status').style.color = "green";
+            } else {
+                document.getElementById('username').disabled = true;
+                document.getElementById('password').disabled = true;
+                document.getElementById('login_button').disabled = true;
+                document.getElementById('org_status').innerText = "✘ Invalid Organization Code.";
+                document.getElementById('org_status').style.color = "red";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Login</h2>
+
+    <form method="POST" action="/login">
+        <label>Organization Code:</label><br>
+        <input type="text" name="org_code" id="org_code" required>
+        <button type="button" onclick="validateOrgCode()" class="btn btn-success">Validate</button><br>
+        <span id="org_status"></span><br><br>
+
+        <label>Username:</label><br>
+        <input type="text" name="username" id="username" required disabled><br>
+
+        <label>Password:</label><br>
+        <input type="password" name="password" id="password" required disabled><br><br>
+
+        <button type="submit" id="login_button" disabled>Login</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% elif message %}
+        <script>alert("{{ message | e }}");</script>
+    {% endif %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+</body>
+</html>
